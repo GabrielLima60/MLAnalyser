@@ -6,7 +6,7 @@
     },
     "SVM": {
         "C": {"min_int": 1, "max_int": 100},
-        "kernel": ["linear", "sigmoid", "rbf", "poly"],
+        "kernel": null,
         "gamma": null,
         "degree": null,
         "coef0": null

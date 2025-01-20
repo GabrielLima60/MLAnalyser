@@ -13,7 +13,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 
-public class Best_Classification_AI extends JFrame implements ActionListener {
+public class MLAnalyser extends JFrame implements ActionListener {
     private JFileChooser fileChooser;
     private JPanel currentPage;
     private JPanel csvSelectionPage;
@@ -44,8 +44,8 @@ public class Best_Classification_AI extends JFrame implements ActionListener {
     private int numberOfIterations;
     private List<String> parameters = Arrays.asList("F1-Score", "Processing Time", "ROC AUC", "Memory Usage", "Precision", "Accuracy","Recall");
 
-    public Best_Classification_AI() {
-        super("Best Classification AI");
+    public MLAnalyser() {
+        super("MLAnalyser");
 
         // Set look and feel to system default
         try {
@@ -321,7 +321,7 @@ public class Best_Classification_AI extends JFrame implements ActionListener {
 
         JPanel bottomTextPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomTextPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        bottomLoadingLabel = new JLabel("<html>Loading... <br/><br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>Results will be available at Best-Classification-AI/results table<br/>The graphs will be available at Best-Classification-AI/results image </html>");
+        bottomLoadingLabel = new JLabel("<html>Loading... <br/><br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>Results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
         bottomLoadingLabel.setFont(new Font("Lucida Sans Unicode", Font.BOLD, 26));
         bottomLoadingLabel.setForeground(new Color(0, 0, 0));
         bottomTextPanel.add(bottomLoadingLabel);
@@ -334,7 +334,7 @@ public class Best_Classification_AI extends JFrame implements ActionListener {
 
     private void updateLoadingLabel(int currentIteration, int totalIterations) {
         String progressText = String.format("Iterations done: %d of %d", currentIteration, totalIterations);
-        bottomLoadingLabel.setText("<html>Loading...<br/>" + progressText + "<br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>Results will be available at Best-Classification-AI/results table<br/>The graphs will be available at Best-Classification-AI/results image </html>");
+        bottomLoadingLabel.setText("<html>Loading...<br/>" + progressText + "<br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>Results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
         revalidate();
         repaint(); 
     }
@@ -540,7 +540,7 @@ public class Best_Classification_AI extends JFrame implements ActionListener {
             System.exit(1);
         }
 
-        SwingUtilities.invokeLater(Best_Classification_AI::new);
+        SwingUtilities.invokeLater(MLAnalyser::new);
     }
 
     private static boolean acquireLock() {

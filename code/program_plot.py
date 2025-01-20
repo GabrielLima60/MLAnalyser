@@ -45,7 +45,7 @@ def plot_all():
 
         axes[row].set_title(f'{title} by Model')
         axes[row].set_xlabel(title)
-        axes[row].set_ylabel('Frequency')
+        axes[row].set_ylabel('')
         axes[row].grid(True, linestyle='--', alpha=0.7)
         groups = [filtered_data[filtered_data['model'] == model][metric] for model in filtered_data['model'].unique()]
         if len(groups) > 1 and groups[0].size > 3:

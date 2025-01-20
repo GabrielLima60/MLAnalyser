@@ -25,6 +25,10 @@ class NaiveBayes:
     def _gaussian_probability(self, class_idx, x):
         mean = self.mean[class_idx]
         var = self.var[class_idx]
+        x = np.array(x, dtype=float)
+        mean = np.array(mean, dtype=float)
+        var = np.array(var, dtype=float)
+
         numerator = np.exp(-0.5 * ((x - mean) ** 2) / (var + 1e-9))
         denominator = np.sqrt(2 * np.pi * var + 1e-9)
         return numerator / denominator
@@ -37,10 +41,13 @@ class NaiveBayes:
         for i in range(n_samples):
             for idx, cls in enumerate(self.classes):
                 class_prior = np.log(self.class_prior[idx])
-                conditional = np.sum(np.log(self._gaussian_probability(idx, X[i])))
+                conditional = np.sum(np.log(self._gaussian_probability(idx, X[i]) + 1e-10))
                 probs[i, idx] = class_prior + conditional
 
-        return np.exp(probs) / np.sum(np.exp(probs), axis=1, keepdims=True)
+        exp_probs = np.exp(probs - np.max(probs, axis=1, keepdims=True))
+        probs = exp_probs / np.sum(exp_probs, axis=1, keepdims=True)
+
+        return probs
 
     def predict(self, X):
         probs = self.predict_proba(X)
