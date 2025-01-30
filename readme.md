@@ -1,8 +1,10 @@
 # Overview
 Best-Classification-AI is a software able to read a CSV file given by the user and perform analysis on different supervisioned AI classification models and optimization techniques, comparing the resulting F1-Score, processing time, area under the ROC curve, memory usage, precision, accuracy and recall.
 
-The results of the analysis are provided in the program though a series of graphs and be extracted at the results table and results image folders.
+The results of the analysis are provided in the program though a series of graphs and be extracted at the results table and results image folders. 
+
 You can configurate the optimization of the Grid-Search and Random-Search, check the read_me at the "configurate optimization" folder.
+
 You can test your own AI model, check the "custom AI model" folder.
 
 Run the .exe file to execute the software. 
