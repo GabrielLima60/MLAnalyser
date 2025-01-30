@@ -1,14 +1,30 @@
 # Overview
 Best-Classification-AI is a software able to read a CSV file given by the user and perform analysis on different supervisioned AI classification models and optimization techniques, comparing the resulting F1-Score, processing time, area under the ROC curve, memory usage, precision, accuracy and recall.
 
-The results of the analysis are provided in the program though a series of graphs and be extracted at the results table and results image folders. 
+The results of the analysis are provided in the program though a series of graphs and be extracted at the results table folder (CSV and XLSX formats) and results image folder (PNG and PDF formats). 
 
-You can configurate the optimization of the Grid-Search and Random-Search, check the read_me at the "configurate optimization" folder.
+You can test your own AI model, check the "custom AI model" folder. In adittion, you can configurate the optimization of the Grid-Search and Random-Search, check the read_me at the "configurate optimization" folder.
 
-You can test your own AI model, check the "custom AI model" folder.
+List of models:
+- Naive Bayes
+- SVM
+- MLP
+- Decision Tree
+- KNN
+- Logaritimic Regression
+- GradientBoost
+- XGBoost
+- Custom AI Model
 
-Run the .exe file to execute the software. 
-You can modify it at will and run the modified version though the java script.
+List of dimension reduction techniques:
+- PCA
+- Incremental PCA
+- ICA
+- LDA
+
+Run the .exe file to execute the software, it wraps a .jar file that runs the java script.
+
+You can modify it at will and run the modified version by running the java script manually.
 
 # Installation 
 Prior to running the program, ensure the following dependencies are installed on your device:
