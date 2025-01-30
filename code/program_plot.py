@@ -45,7 +45,8 @@ def plot_all():
 
         axes[row].set_title(f'{title} by Model')
         axes[row].set_xlabel(title)
-        axes[row].set_ylabel('')
+        axes[row].set_ylabel('Frequency')
+        axes[row].set_yticks([])
         axes[row].grid(True, linestyle='--', alpha=0.7)
         groups = [filtered_data[filtered_data['model'] == model][metric] for model in filtered_data['model'].unique()]
         if len(groups) > 1 and groups[0].size > 3:
@@ -75,6 +76,7 @@ def plot_all():
         axes[row].set_title(f'{title} by Technique')
         axes[row].set_xlabel(title)
         axes[row].set_ylabel('Frequency')
+        axes[row].set_yticks([])
         axes[row].grid(True, linestyle='--', alpha=0.7)
         groups = [filtered_data[filtered_data['technique'] == technique][metric] for technique in filtered_data['technique'].unique()]
         if len(groups) > 1 and groups[0].size > 3:
@@ -91,6 +93,8 @@ def plot_all():
 
     plt.tight_layout()
 
+    if num_metrics == 7:
+        fig.subplots_adjust(top=0.90, bottom=0.1, hspace=0.6)
     if num_metrics == 6:
         fig.subplots_adjust(top=1, bottom=0.0, hspace=0.6)
     if num_metrics == 3:

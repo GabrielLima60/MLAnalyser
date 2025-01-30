@@ -31,6 +31,7 @@ public class MLAnalyser extends JFrame implements ActionListener {
     private JLabel topLoadingLabel;
     private JLabel bottomLoadingLabel;
     private StringBuilder pythonOutput = new StringBuilder();
+    private StringBuilder errorLog = new StringBuilder();
     private static final String LOCK_FILE_PATH = "program.lock";
     private static RandomAccessFile lockFile;
     private static FileLock lock;
@@ -321,7 +322,7 @@ public class MLAnalyser extends JFrame implements ActionListener {
 
         JPanel bottomTextPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomTextPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        bottomLoadingLabel = new JLabel("<html>Loading... <br/><br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>Results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
+        bottomLoadingLabel = new JLabel("<html>Loading... <br/><br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>The results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
         bottomLoadingLabel.setFont(new Font("Lucida Sans Unicode", Font.BOLD, 26));
         bottomLoadingLabel.setForeground(new Color(0, 0, 0));
         bottomTextPanel.add(bottomLoadingLabel);
@@ -334,7 +335,7 @@ public class MLAnalyser extends JFrame implements ActionListener {
 
     private void updateLoadingLabel(int currentIteration, int totalIterations) {
         String progressText = String.format("Iterations done: %d of %d", currentIteration, totalIterations);
-        bottomLoadingLabel.setText("<html>Loading...<br/>" + progressText + "<br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>Results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
+        bottomLoadingLabel.setText("<html>Loading...<br/>" + progressText + "<br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>The results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
         revalidate();
         repaint(); 
     }
@@ -438,7 +439,17 @@ public class MLAnalyser extends JFrame implements ActionListener {
             Process process_cleaning = pb_cleaning.start();
             int exitCode_cleaning = process_cleaning.waitFor();
             if (exitCode_cleaning != 0) {
-                JOptionPane.showMessageDialog(this, "Error on the data cleaning script", "Error", JOptionPane.ERROR_MESSAGE);
+                Path logFilePath = Path.of("error_log.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process_cleaning.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    errorLog.append(line).append("\n");
+                }  
+                Files.writeString(logFilePath, errorLog, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);          
+                JOptionPane.showMessageDialog(this, "Error on the plot script\nDetails are on the file 'error_log.txt' at the main folder", "Error", JOptionPane.ERROR_MESSAGE);
+
+                releaseLock();
+                System.exit(0);
             }
 
             int numberOfAnalysDone = -1;
@@ -453,19 +464,28 @@ public class MLAnalyser extends JFrame implements ActionListener {
                         ProcessBuilder pb = new ProcessBuilder("python", "code\\program_analysis.py", technique, model, selectedOptimization, selectedCrossValidation, parameters);
                         pb.redirectErrorStream(true);
                         Process process = pb.start();
-
                         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                         String line;
-                        while ((line = reader.readLine()) != null) {
-                            pythonOutput.append(line).append("\n");
-                        }
 
                         int exitCode = process.waitFor();
                         if (exitCode != 0) {
-                            //Path filePath = Paths.get("resources\\cleaned_data.csv");
-                            //Files.delete(filePath);
-                            JOptionPane.showMessageDialog(this, "Error on the analysis script", "Error", JOptionPane.ERROR_MESSAGE);
-                            //System.exit(0);
+                            Path filePath = Paths.get("resources\\cleaned_data.csv");
+                            Files.delete(filePath);
+
+                            Path logFilePath = Path.of("error_log.txt");
+                            while ((line = reader.readLine()) != null) {
+                                errorLog.append(line).append("\n");
+                            }  
+                            Files.writeString(logFilePath, errorLog, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);          
+                            JOptionPane.showMessageDialog(this, "Error on the plot script\nDetails are on the file 'error_log.txt' at the main folder", "Error", JOptionPane.ERROR_MESSAGE);
+
+                            releaseLock();
+                            System.exit(0);
+                        }
+                        else {
+                            while ((line = reader.readLine()) != null) {
+                                pythonOutput.append(line).append("\n");
+                        }
                         }
                     }
                 }
@@ -490,7 +510,18 @@ public class MLAnalyser extends JFrame implements ActionListener {
 
              int exitCodeImage = processImage.waitFor();
             if (exitCodeImage != 0) {
-                JOptionPane.showMessageDialog(this, "Error on the plot script", "Error", JOptionPane.ERROR_MESSAGE);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(processImage.getInputStream()));
+                String line;
+
+                Path logFilePath = Path.of("error_log.txt");
+                while ((line = reader.readLine()) != null) {
+                    errorLog.append(line).append("\n");
+                }  
+                Files.writeString(logFilePath, errorLog, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);          
+                JOptionPane.showMessageDialog(this, "Error on the plot script\nDetails are on the file 'error_log.txt' at the main folder", "Error", JOptionPane.ERROR_MESSAGE);
+
+                releaseLock();
+                System.exit(0);
             }
 
             // Save results to xlsx and graphs to pdf
@@ -500,7 +531,18 @@ public class MLAnalyser extends JFrame implements ActionListener {
 
              int exitCodePDF = processPDF.waitFor();
             if (exitCodePDF != 0) {
-                JOptionPane.showMessageDialog(this, "Error on the saving results script", "Error", JOptionPane.ERROR_MESSAGE);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(processPDF.getInputStream()));
+                String line;
+
+                Path logFilePath = Path.of("error_log.txt");
+                while ((line = reader.readLine()) != null) {
+                    errorLog.append(line).append("\n");
+                }  
+                Files.writeString(logFilePath, errorLog, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);          
+                JOptionPane.showMessageDialog(this, "Error on the plot script\nDetails are on the file 'error_log.txt' at the main folder", "Error", JOptionPane.ERROR_MESSAGE);
+
+                releaseLock();
+                System.exit(0);
             }
 
             // Show returned image

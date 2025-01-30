@@ -300,7 +300,7 @@ class PerformAnalysis:
 
 
 class MemoryMonitor:
-    def __init__(self, pid, interval=0.01):
+    def __init__(self, pid, interval=0.001):
         self.process = psutil.Process(pid)
         self.interval = interval
         self.initial_memory_usage = None
