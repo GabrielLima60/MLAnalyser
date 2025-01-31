@@ -24,7 +24,7 @@ List of dimension reduction techniques:
 
 Run the .exe file to execute the software, it wraps a .jar file that runs the java script.
 
-You can modify it at will and run the modified version by running the java script manually.
+You can modify it at will and run the modified version by running the java script manually. In case you are using VSCode, remember to open the entire folder instead of only the java file
 
 # Installation 
 Prior to running the program, ensure the following dependencies are installed on your device:
