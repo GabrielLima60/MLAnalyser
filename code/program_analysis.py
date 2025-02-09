@@ -39,7 +39,7 @@ class Analysis:
     def __init__(self, dataframe, technique, optimization, cross_validation, model='SVM'):
         
         start_time = time.time()
-        prepared = PrepareData(dataframe)
+        prepared = SplitData(dataframe)
 
         if cross_validation == 'Hold-Out':
             performed = PerformAnalysis(technique, model, optimization, prepared.X_train, \
@@ -90,7 +90,7 @@ class Analysis:
 
         self.processing_time = end_time - start_time
 
-class PrepareData:
+class SplitData:
     '''
         This class receaves the dataframe and returns the X_train, X_test, y_train and y_test
     '''
