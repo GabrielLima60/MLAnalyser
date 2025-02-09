@@ -37,7 +37,8 @@ class Analysis:
         This class call the other two classes, Prepare_data and Perform_analysis
     '''
     def __init__(self, dataframe, technique, optimization, cross_validation, model='SVM'):
-
+        
+        start_time = time.time()
         prepared = PrepareData(dataframe)
 
         if cross_validation == 'Hold-Out':
@@ -85,6 +86,9 @@ class Analysis:
         else:
             raise ValueError('Wrong cross-validation name given.')
 
+        end_time = time.time()
+
+        self.processing_time = end_time - start_time
 
 class PrepareData:
     '''
@@ -337,13 +341,7 @@ monitor_thread = threading.Thread(target=memory_monitor)
 monitor_thread.daemon = True
 monitor_thread.start()
 
-start_time = time.time()
-
 analysis = Analysis(given_dataset, given_technique, given_optimization, given_cross_validation, given_model)
-
-end_time = time.time()
-
-processing_time = end_time - start_time
 
 
 given_parameters = given_parameters.split(',')
@@ -351,7 +349,7 @@ result = f"{given_technique},{given_model}"
 if 'F1-Score' in given_parameters:
     result += f",{analysis.f1_score}"
 if 'Processing Time' in given_parameters:
-    result += f",{processing_time}"
+    result += f",{analysis.processing_time}"
 if 'ROC AUC' in given_parameters:
     result += f",{analysis.roc_auc}"
 if 'Memory Usage' in given_parameters:
