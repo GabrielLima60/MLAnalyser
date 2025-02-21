@@ -26,7 +26,7 @@ Run the .exe file to execute the software, it wraps a .jar file that runs the ja
 
 You can modify it at will and run the modified version by running the java script manually. In case you are using VSCode, remember to open the entire folder instead of only the java file
 
-This video shows an exemple of the usage of the program. Skip to 11:45 for the results
+Click on this video for an exemple of the usage of the program. Skip to 11:45 for the results
 [![Watch the video](https://img.youtube.com/vi/J5QUgqYNB_4/maxresdefault.jpg)](https://youtu.be/J5QUgqYNB_4)
 
 
