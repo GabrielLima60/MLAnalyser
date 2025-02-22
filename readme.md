@@ -1,5 +1,5 @@
 # Overview
-Best-Classification-AI is a software able to read a CSV file given by the user and perform analysis on different supervisioned AI classification models and optimization techniques, comparing the resulting F1-Score, processing time, area under the ROC curve, memory usage, precision, accuracy and recall.
+MLAnalyzer is a software able to read a CSV file given by the user and perform analysis on different supervisioned AI classification models and optimization techniques, comparing the resulting F1-Score, processing time, area under the ROC curve, memory usage, precision, accuracy and recall.
 
 The results of the analysis are provided in the program though a series of graphs and be extracted at the results table folder (CSV and XLSX formats) and results image folder (PNG and PDF formats). 
 
