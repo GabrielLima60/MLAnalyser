@@ -13,7 +13,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 
-public class MLAnalyser extends JFrame implements ActionListener {
+public class MLAnalyzer extends JFrame implements ActionListener {
     private JFileChooser fileChooser;
     private JPanel currentPage;
     private JPanel csvSelectionPage;
@@ -45,8 +45,8 @@ public class MLAnalyser extends JFrame implements ActionListener {
     private int numberOfIterations;
     private List<String> parameters = Arrays.asList("F1-Score", "Processing Time", "ROC AUC", "Memory Usage", "Precision", "Accuracy","Recall");
 
-    public MLAnalyser() {
-        super("MLAnalyser");
+    public MLAnalyzer() {
+        super("MLAnalyzer");
 
         // Set look and feel to system default
         try {
@@ -322,7 +322,7 @@ public class MLAnalyser extends JFrame implements ActionListener {
 
         JPanel bottomTextPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomTextPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        bottomLoadingLabel = new JLabel("<html>Loading... <br/><br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>The results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
+        bottomLoadingLabel = new JLabel("<html>Loading... <br/><br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>The results will be available at MLAnalyzer/results table<br/>The graphs will be available at MLAnalyzer/results image </html>");
         bottomLoadingLabel.setFont(new Font("Lucida Sans Unicode", Font.BOLD, 26));
         bottomLoadingLabel.setForeground(new Color(0, 0, 0));
         bottomTextPanel.add(bottomLoadingLabel);
@@ -335,7 +335,7 @@ public class MLAnalyser extends JFrame implements ActionListener {
 
     private void updateLoadingLabel(int currentIteration, int totalIterations) {
         String progressText = String.format("Iterations done: %d of %d", currentIteration, totalIterations);
-        bottomLoadingLabel.setText("<html>Loading...<br/>" + progressText + "<br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>The results will be available at MLAnalyser/results table<br/>The graphs will be available at MLAnalyser/results image </html>");
+        bottomLoadingLabel.setText("<html>Loading...<br/>" + progressText + "<br/><br/>This analysis program may take hours to finish<br/>Leave it running in the background<br/><br/>The results will be available at MLAnalyzer/results table<br/>The graphs will be available at MLAnalyzer/results image </html>");
         revalidate();
         repaint(); 
     }
@@ -582,7 +582,7 @@ public class MLAnalyser extends JFrame implements ActionListener {
             System.exit(1);
         }
 
-        SwingUtilities.invokeLater(MLAnalyser::new);
+        SwingUtilities.invokeLater(MLAnalyzer::new);
     }
 
     private static boolean acquireLock() {
